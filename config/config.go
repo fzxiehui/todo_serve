@@ -43,16 +43,21 @@ func init() {
 	defaultConfig = readViperConfig("TODO_SERVE")
 }
 
+// 重新读取配置文件
+func ReadViperConfigFromFile(configPath string) error {
+	defaultConfig.SetConfigFile(configPath)
+	return defaultConfig.ReadInConfig()
+}
+
 func readViperConfig(appName string) *viper.Viper {
 	v := viper.New()
 	v.SetEnvPrefix(appName)
 	v.AutomaticEnv()
 
 	// global defaults
-	
+
 	v.SetDefault("json_logs", false)
 	v.SetDefault("loglevel", "debug")
-	
 
 	return v
 }
