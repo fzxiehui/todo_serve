@@ -58,6 +58,10 @@ func readViperConfig(appName string) *viper.Viper {
 
 	v.SetDefault("json_logs", false)
 	v.SetDefault("loglevel", "debug")
+	v.SetDefault("db.user", "root")
+	v.SetDefault("db.password", "root")
+	v.SetDefault("db.addr", "127.0.0.1:3306")
+	v.SetDefault("db.name", "test")
 
 	return v
 }
