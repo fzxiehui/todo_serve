@@ -11,6 +11,8 @@ GIT_DIRTY=$(shell test -n "`git status --porcelain`" && echo "+CHANGES" || true)
 BUILD_DATE=$(shell date '+%Y-%m-%d-%H:%M:%S')
 IMAGE_NAME := "fzxiehui/todo_serve"
 
+GORM_GEN_PATH := "internal/generate/gen.go"
+
 default: test
 
 help:
@@ -28,6 +30,8 @@ help:
 	@echo
 
 build:
+	@echo "Generate Query Code"
+	go run ${GORM_GEN_PATH}
 	@echo "building ${BIN_NAME} ${VERSION}"
 	@echo "GOPATH=${GOPATH}"
 	go build -ldflags "-X github.com/fzxiehui/todo_serve/version.GitCommit=${GIT_COMMIT}${GIT_DIRTY} -X github.com/fzxiehui/todo_serve/version.BuildDate=${BUILD_DATE}" -o bin/${BIN_NAME}
@@ -36,6 +40,8 @@ get-deps:
 	dep ensure
 
 build-alpine:
+	@echo "Generate Query Code"
+	go run ${GORM_GEN_PATH}
 	@echo "building ${BIN_NAME} ${VERSION}"
 	@echo "GOPATH=${GOPATH}"
 	go build -ldflags '-w -linkmode external -extldflags "-static" -X github.com/fzxiehui/todo_serve/version.GitCommit=${GIT_COMMIT}${GIT_DIRTY} -X github.com/fzxiehui/todo_serve/version.BuildDate=${BUILD_DATE}' -o bin/${BIN_NAME}
@@ -60,5 +66,7 @@ clean:
 	@test ! -e bin/${BIN_NAME} || rm bin/${BIN_NAME}
 
 test:
+	@echo "Generate Query Code"
+	go run ${GORM_GEN_PATH}
 	go test ./...
 
