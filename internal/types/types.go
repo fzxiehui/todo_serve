@@ -25,3 +25,22 @@ type RegisterResponse struct {
 	Nickname string `json:"nickname"`
 	Token    string `json:"token"`
 }
+
+type CreateTodoRequest struct {
+	Content string `json:"content"`
+	Done    bool   `json:"done"`
+}
+
+type CreateTodoResponse struct {
+	ID      uint   `json:"id"`
+	Content string `json:"content"`
+	Date    string `json:"date"`
+	Done    bool   `json:"done"`
+}
+
+type GetTodoResponse struct {
+	ID      uint   `json:"id"`
+	Content string `json:"content"`
+	Date    string `json:"date"`
+	Done    bool   `json:"done"`
+}
