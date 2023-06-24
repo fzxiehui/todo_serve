@@ -8,3 +8,11 @@ type User struct {
 	Username string `gorm:"type:varchar(20);not null;unique;comment:'用户名'" json:"username"`
 	Password string `gorm:"type:varchar(20);not null;comment:'密码'" json:"password"`
 }
+
+type Todo struct {
+	gorm.Model
+	Date    string `gorm:"type:varchar(20);not null;comment:'日期'" json:"date"`
+	Content string `gorm:"type:MEDIUMTEXT;not null;comment:'内容'" json:"content"`
+	UserId  uint   `gorm:"type:int;not null;comment:'用户id'" json:"user_id"`
+	User    User   `gorm:"foreignKey:UserId" json:"user"`
+}
