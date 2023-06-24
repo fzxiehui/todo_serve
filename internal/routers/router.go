@@ -38,10 +38,11 @@ func InitRouter() *gin.Engine {
 	apiv1.Use(jwt.JWT())
 	{
 		/* todo */
-		apiv1.GET("/todo", v1.GetTodoList)
+		// apiv1.GET("/todo", v1.GetTodoList)
 		apiv1.GET("/todo/:id", v1.GetTodo)
 		apiv1.POST("/todo", v1.CreateTodo)
 		apiv1.PATCH("/todo/:id", v1.UpdateTodo)
+		apiv1.POST("/todoquery", v1.QueryTodo)
 	}
 
 	return router

@@ -1,6 +1,7 @@
 package todo_service
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/fzxiehui/todo_serve/internal/dal/model"
@@ -14,6 +15,7 @@ type Todo struct {
 	Content string
 	Done    bool
 	UserId  uint
+	Text    string
 }
 
 func (t *Todo) Create() (*types.CreateTodoResponse, error) {
@@ -83,4 +85,28 @@ func (t *Todo) Update() (*types.UpdateTodoResponse, error) {
 		Done:    user.Done,
 	}, nil
 
+}
+
+func (t *Todo) Query() (*types.QueryTodoListResponse, error) {
+	query_text := fmt.Sprintf("%%%s%%", t.Text)
+	// log.Debug(query_text)
+	qt := query.Todo
+	todos, err := qt.Where(qt.UserId.Eq(t.UserId),
+		qt.Content.Like(query_text)).Find()
+	if err != nil {
+		return nil, err
+	}
+	// log.Debug("todos:", todos)
+	var res types.QueryTodoListResponse
+	for _, todo := range todos {
+		item := types.QueryTodoResponse{
+			ID:      todo.ID,
+			Date:    todo.Date,
+			Content: todo.Content,
+			Done:    todo.Done,
+		}
+		res.List = append(res.List, item)
+	}
+	res.Total = len(res.List)
+	return &res, nil
 }

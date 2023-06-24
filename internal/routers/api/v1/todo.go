@@ -96,3 +96,30 @@ func UpdateTodo(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, t)
 }
+
+func QueryTodo(c *gin.Context) {
+
+	userid, ok := c.Get("userid")
+	if !ok {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "userid not found"})
+		return
+	}
+
+	var req types.QueryTodoRequest
+	if err := c.BindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	todo := todo_service.Todo{
+		UserId: userid.(uint),
+		Text:   req.Text,
+	}
+
+	todos, err := todo.Query()
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, todos)
+}

@@ -55,3 +55,19 @@ type UpdateTodoResponse struct {
 	Date    string `json:"date"`
 	Done    bool   `json:"done"`
 }
+
+type QueryTodoRequest struct {
+	Text string `json:"text"`
+}
+
+type QueryTodoResponse struct {
+	ID      uint   `json:"id"`
+	Content string `json:"content"`
+	Date    string `json:"date"`
+	Done    bool   `json:"done"`
+}
+
+type QueryTodoListResponse struct {
+	Total int                 `json:"total"`
+	List  []QueryTodoResponse `json:"list"`
+}
