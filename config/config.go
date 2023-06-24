@@ -63,5 +63,10 @@ func readViperConfig(appName string) *viper.Viper {
 	v.SetDefault("db.addr", "127.0.0.1:3306")
 	v.SetDefault("db.name", "test")
 
+	v.SetDefault("http.mode", "release")
+	v.SetDefault("http.port", 8080)
+	v.SetDefault("http.read_timeout", 30)
+	v.SetDefault("http.write_timeout", 30)
+
 	return v
 }

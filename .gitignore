@@ -1,3 +1,5 @@
 bin
 vendor
-internal/dal/query
+internal/dal/query/gen.go
+internal/dal/query/*.gen.go
+

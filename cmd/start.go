@@ -24,6 +24,8 @@ var startCmd = &cobra.Command{
 		}
 		cfg := config.Config()
 		log.Debug("loglevel:", cfg.GetString("loglevel"))
+		HTTPServer()
+
 	},
 }
 
