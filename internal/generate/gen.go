@@ -21,9 +21,21 @@ func GenerateDal() {
 	db := dal.GetDB()
 	g.UseDB(db)
 
+	/*
+	 * 生成单表
+	 */
+	db.AutoMigrate(&model.User{})
+
+	/*
+	 * 生成基本类型安全的 DAO API
+	 */
 	g.ApplyBasic(model.User{})
 
-	g.ApplyInterface(func() {}, model.User{})
+	/*
+	 * 生成自定义的 DAO API
+	 */
+
+	// g.ApplyInterface(func() {}, model.User{})
 
 	g.Execute()
 }
