@@ -44,3 +44,14 @@ type GetTodoResponse struct {
 	Date    string `json:"date"`
 	Done    bool   `json:"done"`
 }
+
+type UpdateTodoRequest struct {
+	Done bool `json:"done"`
+}
+
+type UpdateTodoResponse struct {
+	ID      uint   `json:"id"`
+	Content string `json:"content"`
+	Date    string `json:"date"`
+	Done    bool   `json:"done"`
+}

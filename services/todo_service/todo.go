@@ -55,3 +55,32 @@ func (t *Todo) Get() (*types.GetTodoResponse, error) {
 	}, nil
 
 }
+
+func (t *Todo) Update() (*types.UpdateTodoResponse, error) {
+
+	// qt := query.Todo
+	// user, err := qt.Where(qt.ID.Eq(t.ID),
+	// 	qt.UserId.Eq(t.UserId)).Update(qt.Done, t.Done)
+	// if err != nil {
+	// 	return nil, err
+	// }
+	qt := query.Todo
+	user, err := qt.Where(qt.ID.Eq(t.ID),
+		qt.UserId.Eq(t.UserId)).First()
+
+	if err != nil {
+		return nil, err
+	}
+
+	user.Done = t.Done
+
+	qt.Save(user)
+
+	return &types.UpdateTodoResponse{
+		ID:      user.ID,
+		Date:    user.Date,
+		Content: user.Content,
+		Done:    user.Done,
+	}, nil
+
+}

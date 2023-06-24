@@ -66,4 +66,33 @@ func CreateTodo(c *gin.Context) {
 }
 
 func UpdateTodo(c *gin.Context) {
+	userid, ok := c.Get("userid")
+	if !ok {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "userid not found"})
+		return
+	}
+
+	todoid, err := strconv.ParseUint(c.Param("id"), 10, 64)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	var req types.UpdateTodoRequest
+	if err := c.BindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	todo := todo_service.Todo{
+		UserId: userid.(uint),
+		ID:     uint(todoid),
+		Done:   req.Done,
+	}
+
+	t, err := todo.Update()
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, t)
 }
