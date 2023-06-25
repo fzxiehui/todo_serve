@@ -2,4 +2,6 @@ bin
 vendor
 internal/dal/query/gen.go
 internal/dal/query/*.gen.go
+ops/bin
+ops/build
 
