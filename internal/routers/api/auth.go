@@ -52,6 +52,9 @@ func Register(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+
+	referer := c.Request.Header.Get("Referer")
+	c.SetCookie("Authorization", user.Token, 3600, "/", referer, false, false)
 	c.JSON(http.StatusOK, user)
 	return
 }
